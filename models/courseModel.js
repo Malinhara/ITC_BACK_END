@@ -2,7 +2,7 @@ const db = require('../database');
 
 // Get all courses
 const getCourses = (callback) => {
-  const query = 'SELECT * FROM CourseDetails';
+  const query = 'SELECT * FROM CourseDetails WHERE Active = 1';
   db.query(query, (err, results) => {
     if (err) {
       callback(err, null);

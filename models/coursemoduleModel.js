@@ -22,7 +22,7 @@ const createCourseModule = (module, callback) => {
 
 // Get all course modules
 const getCourseModules = (callback) => {
-  const query = 'SELECT * FROM coursemodule';
+  const query = "SELECT * FROM coursemodule WHERE Active = 'Yes'";
   db.query(query, (err, results) => {
     if (err) {
       callback(err, null);
@@ -34,12 +34,11 @@ const getCourseModules = (callback) => {
 
 const getCourseModuleByid = (id, callback) => { 
   const query = `
-    SELECT 
-      cd.ModuleCode
-    FROM studentdetails sd
-    JOIN coursedetails cd ON sd.CourseId = cd.CD_ID
-    WHERE sd.Id = ?;
-  `;
+  SELECT 
+    cd.ModuleCode
+  FROM studentdetails sd
+  JOIN coursedetails cd ON sd.CourseId = cd.CD_ID
+  WHERE sd.Id = ? AND cd.Active = 1;`
 
   db.query(query, [id], (err, results) => {
     if (err) {
@@ -62,8 +61,7 @@ const getModuleDetailsByCodes = (moduleCodes, callback) => {
       ModuleId,
       ModuleName
     FROM coursemodule
-    WHERE ModuleCode IN (?);
-  `;
+    WHERE ModuleCode IN (?) AND Active = 'Yes' `;
 
   db.query(query, [moduleCodes], (err, results) => {
     if (err) {
