@@ -46,7 +46,7 @@ const registerStudent = (student, callback) => {
 
 
 const getStudents = (callback) => {
-    const query = `SELECT * FROM StudentDetails `;
+    const query = `SELECT * FROM StudentDetails WHERE Deleted = 0 `;
     
     db.query(query,(err, results) => {
       if (err) {
