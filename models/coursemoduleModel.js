@@ -32,7 +32,7 @@ const getCourseModules = (callback) => {
   });
 };
 
-const getCourseModuleByid = (id, callback) => {
+const getCourseModuleByid = (id, callback) => { 
   const query = `
     SELECT 
       cd.ModuleCode

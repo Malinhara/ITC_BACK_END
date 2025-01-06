@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 
 // Enable CORS
 app.use(cors({
-  origin: ``,
+  origin: baseUrl,
   credentials: true
 }));
 app.use(express.json());
