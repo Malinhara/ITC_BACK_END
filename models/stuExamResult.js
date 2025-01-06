@@ -34,7 +34,7 @@ const getExamResultsByStudent = (studentId, callback) => {
   FROM studentexamresult se
   JOIN studentdetails sd ON se.StudentId = sd.id
   JOIN coursemodule cm ON se.ModuleCode = cm.Moduleid
-  WHERE se.StudentId = ? AND se.Marks > 40 AND sd.FinalExamSitted = 1
+  WHERE se.StudentId = ? AND se.Marks > 40 AND sd.FinalExamSitted = 1 AND sd.Deleted = 0
 `;
 
   db.query(query, [studentId], (err, results) => {
