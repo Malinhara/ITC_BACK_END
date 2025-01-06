@@ -46,11 +46,9 @@ const getCourseModuleByid = (id, callback) => {
       callback(err, null); 
     } else {
       if (results.length > 0) {
-        const moduleCode = results[0].ModuleCode;
-        console.log('ModuleCode:', moduleCode);
-        
- 
-        getModuleDetailsByCode(moduleCode, callback);
+        const moduleCodes = results.map(result => result.ModuleCode); 
+   
+        getModuleDetailsByCodes(moduleCodes, callback);
       } else {
         callback('No module code found for this student', null);
       }
@@ -58,23 +56,24 @@ const getCourseModuleByid = (id, callback) => {
   });
 };
 
-const getModuleDetailsByCode = (moduleCode, callback) => {
+const getModuleDetailsByCodes = (moduleCodes, callback) => {
   const query = `
     SELECT 
       ModuleId,
       ModuleName
     FROM coursemodule
-    WHERE ModuleCode = ?;
+    WHERE ModuleCode IN (?);
   `;
 
-  db.query(query, [moduleCode], (err, results) => {
+  db.query(query, [moduleCodes], (err, results) => {
     if (err) {
       callback(err, null);
     } else {
       if (results.length > 0) {
+  
         callback(null, results); 
       } else {
-        callback('No module details found for this module code', null);
+        callback('No module details found for these module codes', null);
       }
     }
   });
